@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "SQLFluff Fix Current File",
+            "type": "shell",
+            "command": "sqlfluff fix \"${file}\"",
+            "problemMatcher": []
+        },
+        {
+            "label": "SQLFluff Lint Current File",
+            "type": "shell",
+            "command": "sqlfluff lint \"${file}\"",
+            "problemMatcher": []
+        }
+    ]
+}
