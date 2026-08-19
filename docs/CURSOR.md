@@ -32,6 +32,14 @@ The repo contains:
 cursor/keybindings.json
 ```
 
+To append the repo keybindings to your existing Cursor configuration, run:
+
+```bash
+./scripts/install-cursor-keybindings.sh
+```
+
+The script backs up the existing file and skips bindings already present, so it is safe to run again. Reload Cursor after it finishes.
+
 The important custom workflow includes:
 
 | Shortcut | Action |

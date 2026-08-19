@@ -65,6 +65,7 @@ macOS
 ├── docs/
 │   ├── CODEX.md
 │   ├── CURSOR.md
+│   ├── EXTENSIONS.md
 │   ├── MIGRATION_NOTES.md
 │   ├── NEXT_LAYER.md
 │   ├── SHORTCUTS.md
@@ -135,6 +136,8 @@ gh auth login
 ### 6. Install Cursor config
 
 See [`docs/CURSOR.md`](docs/CURSOR.md).
+
+Recommended Cursor extensions are listed in [`docs/EXTENSIONS.md`](docs/EXTENSIONS.md).
 
 ### 7. Set up Codex
 
@@ -207,6 +210,7 @@ mac_setup/
 │   └── tasks.json
 ├── docs/
 │   ├── CURSOR.md
+│   ├── EXTENSIONS.md
 │   ├── MIGRATION_NOTES.md
 │   ├── NEXT_LAYER.md
 │   ├── SHORTCUTS.md
