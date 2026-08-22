@@ -32,3 +32,6 @@ cask "orbstack"
 cask "raycast"
 cask "rectangle"
 cask "1password"
+
+# LaTeX
+cask "basictex"

@@ -21,6 +21,7 @@ commands=(
   lzop
   black
   sqlfluff
+  pdflatex
 )
 
 failed=0
