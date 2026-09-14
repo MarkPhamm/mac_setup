@@ -7,13 +7,17 @@
 #   brew bundle cleanup --file=./Brewfile
 # Review cleanup output before using --force.
 
+# HashiCorp tap: terraform left Homebrew core after the BSL license change.
+# Homebrew requires explicit trust for third-party taps.
+tap "hashicorp/tap"
+
 # Core development
 brew "git"
 brew "gh"
 brew "uv"
 brew "node"
 brew "awscli"
-brew "terraform"
+brew "hashicorp/tap/terraform", trusted: true
 
 # Shell / productivity CLI
 brew "jq"

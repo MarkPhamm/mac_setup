@@ -10,7 +10,7 @@
 | uv | Python versions, virtual environments, dependencies, global CLI tools |
 | Node.js | npm host for Codex CLI |
 | AWS CLI (`aws`) | AWS authentication and cloud CLI |
-| Terraform | infrastructure as code |
+| Terraform | infrastructure as code (HashiCorp tap; no longer in Homebrew core) |
 | Oh My Zsh | Zsh configuration framework |
 
 ## Terminal stack
