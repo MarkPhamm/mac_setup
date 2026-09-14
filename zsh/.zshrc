@@ -36,6 +36,32 @@ if command -v zoxide >/dev/null 2>&1; then
 fi
 
 # ------------------------------------------------------------
+# Project terminal background
+# ------------------------------------------------------------
+# Sets the terminal background colour from the current git repo root, so each
+# project gets its own (deterministic) dark tint. Resets outside a repo.
+# Requires a terminal that supports OSC 11 (iTerm2, WezTerm, Kitty; not Apple
+# Terminal).
+if [[ -o interactive ]] && command -v md5 >/dev/null 2>&1; then
+  _project_bg() {
+    local git_root
+    git_root=$(git rev-parse --show-toplevel 2>/dev/null) || {
+      printf '\e]111\e\\'
+      return
+    }
+    local hash=$(printf '%s' "$git_root" | md5 -q)
+    local r=$(( 16#${hash:0:2} % 71 + 30 ))
+    local g=$(( 16#${hash:2:2} % 71 + 30 ))
+    local b=$(( 16#${hash:4:2} % 71 + 30 ))
+    printf '\e]11;#%02x%02x%02x\e\\' $r $g $b
+  }
+
+  autoload -Uz add-zsh-hook
+  add-zsh-hook chpwd _project_bg
+  _project_bg
+fi
+
+# ------------------------------------------------------------
 # Personal aliases / functions
 # ------------------------------------------------------------
 if [[ -f "$HOME/.zsh_aliases" ]]; then
@@ -50,3 +76,7 @@ fi
 if [[ -f "$HOME/.zshrc.local" ]]; then
   source "$HOME/.zshrc.local"
 fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
