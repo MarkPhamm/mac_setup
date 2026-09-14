@@ -12,6 +12,8 @@ brew "git"
 brew "gh"
 brew "uv"
 brew "node"
+brew "awscli"
+brew "terraform"
 
 # Shell / productivity CLI
 brew "jq"
@@ -32,6 +34,8 @@ cask "orbstack"
 cask "raycast"
 cask "rectangle"
 cask "1password"
+cask "dbeaver-community"
+cask "obsidian"
 
 # LaTeX
 cask "basictex"

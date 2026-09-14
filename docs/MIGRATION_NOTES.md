@@ -89,3 +89,14 @@ It is intentionally omitted from the portable keybindings because it has no gene
 ## 7. Cursor command identifiers
 
 Cursor evolves quickly. The repo preserves the `composerMode.agent` command from the existing setup, but if a future Cursor version changes that identifier, rebind `Cmd + I` using Cursor's current Command Palette / Keyboard Shortcuts UI.
+
+## 8. Replacements for older recommended apps
+
+Older team setup docs often listed Atom, Sublime Text, Alfred, SQLWorkbench, and Docker Desktop.
+
+This repo uses the current equivalents instead:
+
+- **Cursor**, not Atom / Sublime Text / VS Code
+- **Raycast**, not Alfred
+- **DBeaver**, not SQLWorkbench (no separate Java install)
+- **OrbStack**, not Docker Desktop

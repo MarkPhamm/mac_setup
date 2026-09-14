@@ -11,6 +11,8 @@ This repo turns my Mac setup into code: Homebrew packages, terminal tooling, Zsh
 - Homebrew
 - Git + GitHub CLI
 - uv
+- AWS CLI
+- Terraform
 - Oh My Zsh
 - zsh-autosuggestions
 - zsh-syntax-highlighting
@@ -35,6 +37,8 @@ This repo turns my Mac setup into code: Homebrew packages, terminal tooling, Zsh
 - Raycast
 - Rectangle
 - 1Password
+- DBeaver
+- Obsidian
 
 ### Python / SQL tooling
 - Black
@@ -62,6 +66,10 @@ macOS
 ├── uv
 │   ├── Python versions
 │   └── global CLI tools
+├── AWS CLI
+├── Terraform
+├── DBeaver
+├── Obsidian
 ├── docs/
 │   ├── CODEX.md
 │   ├── CURSOR.md

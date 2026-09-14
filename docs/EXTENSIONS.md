@@ -19,6 +19,8 @@ These are the recommended extensions for Cursor. Install them from the Extension
 - **Even Better TOML** — TOML syntax support and validation.
 - **Rainbow CSV** — easier reading and editing of CSV files.
 - **Markdown All in One** — Markdown shortcuts, navigation, and preview helpers.
+- **HashiCorp Terraform** — Terraform syntax, validation, and formatting.
+- **YAML** — YAML schema validation and autocompletion.
 
 ## Suggested setup
 

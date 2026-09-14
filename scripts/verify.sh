@@ -19,6 +19,8 @@ commands=(
   zoxide
   lazygit
   lzop
+  aws
+  terraform
   black
   sqlfluff
   pdflatex
@@ -55,7 +57,7 @@ fi
 
 echo
 echo "GUI apps:"
-for app in Cursor Warp OrbStack Raycast Rectangle "1Password"; do
+for app in Cursor Warp OrbStack Raycast Rectangle "1Password" DBeaver Obsidian; do
   if [[ -d "/Applications/${app}.app" ]]; then
     printf "%-18s %s\n" "$app" "OK"
   else

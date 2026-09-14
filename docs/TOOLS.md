@@ -9,6 +9,8 @@
 | GitHub CLI (`gh`) | GitHub auth, repos, PRs, issues, workflows |
 | uv | Python versions, virtual environments, dependencies, global CLI tools |
 | Node.js | npm host for Codex CLI |
+| AWS CLI (`aws`) | AWS authentication and cloud CLI |
+| Terraform | infrastructure as code |
 | Oh My Zsh | Zsh configuration framework |
 
 ## Terminal stack
@@ -36,6 +38,8 @@
 | Raycast | launcher and productivity utility |
 | Rectangle | keyboard window management |
 | 1Password | password / credential management |
+| DBeaver | SQL GUI for warehouses and databases |
+| Obsidian | Markdown notes |
 
 ## Python and SQL
 
@@ -47,6 +51,15 @@ uv tool install sqlfluff
 ```
 
 This keeps them isolated from project environments while still making the binaries available in the shell.
+
+DBeaver is the SQL GUI. It replaces the older SQLWorkbench + Java flow and ships its own runtime.
+
+```bash
+aws --version
+terraform version
+```
+
+Configure AWS credentials with `aws configure` or SSO (`aws sso login`) when a project needs it. Keep account IDs and profiles in `~/.zshrc.local` or `~/.aws/`, not in this repo.
 
 ## Codex CLI
 

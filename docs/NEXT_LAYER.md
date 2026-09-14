@@ -1,17 +1,14 @@
 # Next layer: data engineering workstation
 
-The base Mac setup should stay relatively generic. Add data-platform tooling only when a project needs it.
+The base Mac setup stays relatively generic. AWS CLI, Terraform, Node.js, DBeaver, and Docker via OrbStack are already in the Brewfile. Add the rest only when a project needs it.
 
 Potential next layer:
 
 - dbt adapter(s) for the warehouse in use
-- AWS CLI
-- Terraform
-- Node.js
-- Docker / Compose workloads through OrbStack
 - Airflow or Astronomer tooling
-- database CLIs
+- database CLIs (`psql`, Snowflake SnowSQL, etc.)
 - cloud credential helpers
+- Kubernetes CLI (`kubectl`) if a project needs cluster access
 
 ## Recommendation
 
