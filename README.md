@@ -61,6 +61,7 @@ macOS
 │           ├── zoxide
 │           └── personal aliases/functions
 ├── Cursor
+│   ├── extensions.txt
 │   ├── keybindings.json
 │   └── tasks.json
 ├── uv
@@ -145,7 +146,10 @@ gh auth login
 
 See [`docs/CURSOR.md`](docs/CURSOR.md).
 
-Recommended Cursor extensions are listed in [`docs/EXTENSIONS.md`](docs/EXTENSIONS.md).
+```bash
+./scripts/install-cursor-keybindings.sh
+./scripts/install-cursor-extensions.sh
+```
 
 ### 7. Set up Codex
 
@@ -214,6 +218,7 @@ mac_setup/
 ├── Makefile
 ├── README.md
 ├── cursor/
+│   ├── extensions.txt
 │   ├── keybindings.json
 │   └── tasks.json
 ├── docs/
@@ -227,6 +232,8 @@ mac_setup/
 ├── scripts/
 │   ├── bootstrap.sh
 │   ├── configure-git.sh
+│   ├── install-cursor-extensions.sh
+│   ├── install-cursor-keybindings.sh
 │   ├── link-dotfiles.sh
 │   └── verify.sh
 └── zsh/

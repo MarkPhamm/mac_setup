@@ -1,0 +1,39 @@
+# Cursor extensions. One publisher.extension per line.
+# Cursor-bundled IDs are omitted: anysphere.cursorpyright, anysphere.remote-ssh
+# Refresh from this machine with:
+#   cursor --list-extensions | grep -v '^anysphere\.'
+
+# Theme and appearance
+enkia.tokyo-night
+pkief.material-icon-theme
+oderwat.indent-rainbow
+
+# Python
+ms-python.python
+ms-python.debugpy
+
+# dbt and SQL
+dbtlabsinc.dbt
+innoverio.vscode-dbt-power-user
+altimateai.vscode-altimate-mcp-server
+samuelcolvin.jinjahtml
+mechatroner.rainbow-csv
+buvan.sql-crack
+
+# Terraform and AWS
+hashicorp.terraform
+4ops.terraform
+betajob.modulestf
+amazonwebservices.aws-toolkit-vscode
+dannysteenman.aws-terraform-extension-pack
+dannysteenman.iam-actions-snippets
+dannysteenman.iam-service-principal-snippets
+
+# Editor helpers
+wakatime.vscode-wakatime
+waderyan.gitblame
+lyuwenhan.code-formatter-and-minifier
+saltcoreyan.json-format-sortcore
+bierner.markdown-mermaid
+davidanson.vscode-markdownlint
+cweijan.vscode-office

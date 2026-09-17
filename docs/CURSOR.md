@@ -24,6 +24,22 @@ cursor .
 
 The exact wording of the command can change between Cursor releases, so search the Command Palette rather than depending on a hardcoded menu label.
 
+## Extensions
+
+The repo contains:
+
+```text
+cursor/extensions.txt
+```
+
+To install the same Cursor extensions on a new Mac:
+
+```bash
+./scripts/install-cursor-extensions.sh
+```
+
+See [`docs/EXTENSIONS.md`](EXTENSIONS.md) for how to list, refresh, and update that file.
+
 ## Keybindings
 
 The repo contains:

@@ -1,34 +1,44 @@
 # Cursor extensions
 
-These are the recommended extensions for Cursor. Install them from the Extensions panel or with the `code`/`cursor` command when available.
+The installable source of truth is:
 
-## Theme and appearance
+```text
+cursor/extensions.txt
+```
 
-- **Tokyo Night** — a dark blue theme with clear syntax contrast.
-- **Material Icon Theme** — recognizable file and folder icons.
+That file is the Brewfile equivalent for Cursor: one extension ID per line. On a new Mac, after Cursor and the `cursor` CLI are available:
 
-## Recommended development extensions
+```bash
+./scripts/install-cursor-extensions.sh
+```
 
-- **Python** — Python language support, debugging, and environment integration.
-- **Ruff** — fast Python linting and formatting.
-- **SQLFluff** — SQL linting and formatting; pairs with the repo's SQLFluff tasks.
-- **Docker** — Dockerfile, Compose, image, and container support for OrbStack.
-- **GitLens** — richer Git history, blame, and repository navigation.
-- **WakaTime** — automatic coding activity and time tracking (`WakaTime.vscode-wakatime`). Paste an API key from [wakatime.com](https://wakatime.com) after install.
-- **Prettier - Code formatter** — consistent formatting for JSON, YAML, Markdown, and web files.
-- **ESLint** — JavaScript and TypeScript linting when working on web projects.
-- **Even Better TOML** — TOML syntax support and validation.
-- **Rainbow CSV** — easier reading and editing of CSV files.
-- **Markdown All in One** — Markdown shortcuts, navigation, and preview helpers.
-- **HashiCorp Terraform** — Terraform syntax, validation, and formatting.
-- **YAML** — YAML schema validation and autocompletion.
+The script skips extensions that are already installed, so it is safe to run again.
 
-## Suggested setup
+## What is in the list
 
-1. Open Cursor.
-2. Open Extensions with `Cmd + Shift + X`.
-3. Search for each extension by name and install it.
-4. Select **Tokyo Night** using `Cmd + Shift + P` → `Preferences: Color Theme`.
-5. Select **Material Icon Theme** using `Cmd + Shift + P` → `Preferences: File Icon Theme`.
+The list matches the extensions currently installed on this machine, minus Cursor-bundled IDs (`anysphere.cursorpyright`, `anysphere.remote-ssh`). Those come with Cursor and should not be reinstalled from the marketplace.
 
-Keep extensions global when they are part of your general workflow. Put project-specific recommendations in a project's `.vscode/extensions.json` instead of adding them to this machine-wide setup.
+After install:
+
+1. Select **Tokyo Night** with `Cmd + Shift + P` → `Preferences: Color Theme`.
+2. Select **Material Icon Theme** with `Cmd + Shift + P` → `Preferences: File Icon Theme`.
+3. Paste a WakaTime API key from [wakatime.com](https://wakatime.com) if prompted.
+
+Keep extensions global when they are part of your general workflow. Put project-specific recommendations in a project's `.vscode/extensions.json` instead of adding them to this machine-wide list.
+
+## List what is installed
+
+```bash
+cursor --list-extensions
+cursor --list-extensions --show-versions
+```
+
+## Refresh the repo list from this machine
+
+After installing or removing extensions in the UI:
+
+```bash
+cursor --list-extensions | grep -v '^anysphere\.'
+```
+
+Compare that output with `cursor/extensions.txt` and update the file if the change should follow you to the next Mac.
