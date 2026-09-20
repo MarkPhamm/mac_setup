@@ -9,6 +9,7 @@ commands=(
   node
   npm
   codex
+  claude
   jq
   fzf
   rg

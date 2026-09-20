@@ -24,6 +24,7 @@ The article documents:
 - lazygit
 - lzop
 - Codex CLI
+- Claude Code
 - terminal shortcuts
 
 ## Official install references
@@ -44,6 +45,12 @@ Codex CLI:
 
 ```text
 https://help.openai.com/en/articles/11096431-openai-codex-cli-getting-started
+```
+
+Claude Code:
+
+```text
+https://code.claude.com/docs/en/setup
 ```
 
 Homebrew formulae/casks:

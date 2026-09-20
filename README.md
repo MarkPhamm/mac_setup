@@ -33,6 +33,7 @@ This repo turns my Mac setup into code: Homebrew packages, terminal tooling, Zsh
 ### Development apps
 - Cursor
 - Codex CLI
+- Claude Code
 - OrbStack
 - Raycast
 - Rectangle
@@ -72,6 +73,7 @@ macOS
 ├── DBeaver
 ├── Obsidian
 ├── docs/
+│   ├── CLAUDE.md
 │   ├── CODEX.md
 │   ├── CURSOR.md
 │   ├── EXTENSIONS.md
@@ -151,9 +153,9 @@ See [`docs/CURSOR.md`](docs/CURSOR.md).
 ./scripts/install-cursor-extensions.sh
 ```
 
-### 7. Set up Codex
+### 7. Set up Codex and Claude Code
 
-See [`docs/CODEX.md`](docs/CODEX.md).
+See [`docs/CODEX.md`](docs/CODEX.md) and [`docs/CLAUDE.md`](docs/CLAUDE.md).
 
 ### 8. Verify
 
@@ -222,6 +224,8 @@ mac_setup/
 │   ├── keybindings.json
 │   └── tasks.json
 ├── docs/
+│   ├── CLAUDE.md
+│   ├── CODEX.md
 │   ├── CURSOR.md
 │   ├── EXTENSIONS.md
 │   ├── MIGRATION_NOTES.md

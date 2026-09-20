@@ -33,6 +33,7 @@ brew "lzop"
 
 # Desktop apps
 cask "cursor"
+cask "claude-code"
 cask "warp"
 cask "orbstack"
 cask "raycast"

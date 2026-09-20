@@ -71,6 +71,16 @@ npm install -g @openai/codex
 
 The recommended local setup uses `OPENAI_API_KEY` from `~/.zshrc.local`, but Codex also supports local config under `~/.codex/`.
 
+## Claude Code
+
+Claude Code is installed with Homebrew:
+
+```bash
+brew install --cask claude-code
+```
+
+The recommended local setup uses `ANTHROPIC_API_KEY` from `~/.zshrc.local`, but Claude Code also supports local config under `~/.claude/`. Start a session with `claude`.
+
 ## zoxide
 
 The Zsh config initializes zoxide with:
