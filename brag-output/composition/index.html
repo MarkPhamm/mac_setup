@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>mac_setup — brag video</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/TextPlugin.min.js"></script>
+    <script src="assets/music/audio-data.js"></script>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #000;
+        font-family: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #0d0f12;
+      }
+
+      /* ---- persistent chrome ---- */
+      .ambient-glow {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        box-shadow: inset 0 0 260px 60px rgba(61, 220, 132, 0.12);
+      }
+      .title-bar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 56px;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        padding-left: 28px;
+        gap: 10px;
+        background: rgba(255, 255, 255, 0.02);
+        border-bottom: 1px solid rgba(232, 234, 237, 0.08);
+      }
+      .dot {
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        display: block;
+      }
+      .dot.red {
+        background: #ff5f57;
+      }
+      .dot.amber {
+        background: #febc2e;
+      }
+      .dot.green {
+        background: #28c840;
+      }
+      .window-label {
+        position: absolute;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-size: 14px;
+        color: #e8eaed;
+        letter-spacing: 0.02em;
+      }
+
+      /* ---- content viewport ---- */
+      .content {
+        position: absolute;
+        top: 100px;
+        left: 120px;
+        right: 120px;
+        bottom: 80px;
+        z-index: 2;
+      }
+      .clip {
+        position: absolute;
+        inset: 0;
+        padding: 48px 56px;
+      }
+
+      /* ---- prompt line (scenes 1, 3, 4) ---- */
+      .prompt-line {
+        display: flex;
+        align-items: baseline;
+        font-size: 44px;
+        color: #e8eaed;
+        line-height: 1.3;
+        white-space: pre;
+      }
+      .prompt-glyph {
+        font-weight: 700;
+        margin-right: 20px;
+      }
+      .prompt-glyph.old {
+        color: #e8eaed;
+      }
+      .prompt-glyph.new {
+        color: #3ddc84;
+      }
+      .dir {
+        color: #f5a623;
+        font-weight: 700;
+      }
+      .git {
+        color: #3ddc84;
+        opacity: 0.9;
+        margin-left: 12px;
+      }
+      .cursor {
+        color: #e8eaed;
+        margin-left: 3px;
+        display: inline-block;
+      }
+      .cursor-blink {
+        animation: blink 0.85s step-end infinite;
+      }
+      .cursor-solid {
+        animation: none;
+        opacity: 1;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* ---- scene 2: bootstrap log ---- */
+      .log {
+        margin-top: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      .log-line {
+        font-size: 36px;
+        color: #e8eaed;
+        opacity: 0;
+      }
+      .arrow {
+        color: #f5a623;
+        font-weight: 700;
+        margin-right: 16px;
+      }
+
+      /* ---- scene 3 old prompt fade target ---- */
+      #s3-new-prompt {
+        margin-top: 26px;
+        opacity: 0;
+      }
+
+      /* ---- scene 4: verify table ---- */
+      #s4-cmd {
+        opacity: 0;
+      }
+      .table {
+        margin-top: 40px;
+        width: 920px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        opacity: 0;
+      }
+      .table-header {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 0.09em;
+        color: #e8eaed;
+        border-bottom: 2px solid rgba(232, 234, 237, 0.18);
+        padding-bottom: 14px;
+      }
+      .table-row {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        align-items: center;
+        font-size: 34px;
+        opacity: 0;
+      }
+      .table-row .cmd {
+        color: #e8eaed;
+      }
+      .table-row .status {
+        color: #3ddc84;
+        font-weight: 700;
+        display: inline-block;
+      }
+
+      /* ---- scene 5: outro card ---- */
+      .outro {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 30px;
+      }
+      .outro-title {
+        font-size: 156px;
+        font-weight: 700;
+        color: #3ddc84;
+        letter-spacing: -0.02em;
+        opacity: 0;
+      }
+      .outro-tagline {
+        font-size: 42px;
+        font-weight: 400;
+        color: #e8eaed;
+        max-width: 1300px;
+        line-height: 1.4;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="mac-setup-brag"
+      data-start="0"
+      data-width="1920"
+      data-height="1080"
+      data-duration="20"
+      data-fps="30"
+    >
+      <div class="ambient-glow" id="ambient-glow"></div>
+
+      <div class="title-bar" id="title-bar">
+        <span class="dot red"></span>
+        <span class="dot amber"></span>
+        <span class="dot green"></span>
+        <span class="window-label">zsh — mac_setup</span>
+      </div>
+
+      <div class="content">
+        <!-- SCENE 1: the blank Mac -->
+        <section id="scene-1" class="clip" data-start="0" data-duration="3.0">
+          <div class="prompt-line" id="s1-prompt-line">
+            <span class="prompt-glyph old">$</span>
+            <span id="s1-typed"></span><span id="s1-cursor" class="cursor cursor-blink">▍</span>
+          </div>
+        </section>
+
+        <!-- SCENE 2: bootstrap speedrun -->
+        <section id="scene-2" class="clip" data-start="3.0" data-duration="4.92">
+          <div class="log">
+            <div class="log-line" id="s2-line-1"><span class="arrow">==&gt;</span>Homebrew</div>
+            <div class="log-line" id="s2-line-2"><span class="arrow">==&gt;</span>Oh My Zsh</div>
+            <div class="log-line" id="s2-line-3">
+              <span class="arrow">==&gt;</span>zsh-autosuggestions
+            </div>
+            <div class="log-line" id="s2-line-4">
+              <span class="arrow">==&gt;</span>Installing global formatter/linter tools with uv
+            </div>
+            <div class="log-line" id="s2-line-5"><span class="arrow">==&gt;</span>Codex CLI</div>
+          </div>
+        </section>
+
+        <!-- SCENE 3: the terminal comes alive -->
+        <section id="scene-3" class="clip" data-start="7.92" data-duration="4.735">
+          <div class="prompt-line" id="s3-old-prompt">
+            <span class="prompt-glyph old">$</span>./scripts/link-dotfiles.sh
+          </div>
+          <div class="prompt-line" id="s3-new-prompt">
+            <span class="prompt-glyph new">➜</span
+            >&nbsp;&nbsp;<span class="dir">mac_setup</span><span class="git">git:(main)</span>
+          </div>
+        </section>
+
+        <!-- SCENE 4: all green -->
+        <section id="scene-4" class="clip" data-start="12.655" data-duration="4.345">
+          <div class="prompt-line" id="s4-cmd">
+            <span class="prompt-glyph new">➜</span
+            >&nbsp;&nbsp;<span class="dir">mac_setup</span>&nbsp;./scripts/verify.sh
+          </div>
+          <div class="table" id="s4-table">
+            <div class="table-header"><span>COMMAND</span><span>STATUS</span></div>
+            <div class="table-row" id="s4-row-1">
+              <span class="cmd">git</span><span class="status" id="s4-status-1">OK</span>
+            </div>
+            <div class="table-row" id="s4-row-2">
+              <span class="cmd">brew</span><span class="status" id="s4-status-2">OK</span>
+            </div>
+            <div class="table-row" id="s4-row-3">
+              <span class="cmd">uv</span><span class="status" id="s4-status-3">OK</span>
+            </div>
+            <div class="table-row" id="s4-row-4">
+              <span class="cmd">claude</span><span class="status" id="s4-status-4">OK</span>
+            </div>
+            <div class="table-row" id="s4-row-5">
+              <span class="cmd">codex</span><span class="status" id="s4-status-5">OK</span>
+            </div>
+            <div class="table-row" id="s4-row-6">
+              <span class="cmd">lazygit</span><span class="status" id="s4-status-6">OK</span>
+            </div>
+            <div class="table-row" id="s4-row-7">
+              <span class="cmd">fzf</span><span class="status" id="s4-status-7">OK</span>
+            </div>
+            <div class="table-row" id="s4-row-8">
+              <span class="cmd">GUI apps</span><span class="status" id="s4-status-8">OK</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- SCENE 5: outro card -->
+        <section id="scene-5" class="clip" data-start="17.0" data-duration="3.0">
+          <div class="outro">
+            <div class="outro-title" id="s5-title">mac_setup</div>
+            <div class="outro-tagline" id="s5-tagline">
+              A fresh Mac, fully loaded, before your coffee's done.
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- ===================== AUDIO ===================== -->
+
+      <!-- music bed -->
+      <audio
+        id="music-bed"
+        src="assets/music/happy-beats-business-moves-vol-9-by-ende-dot-app.mp3"
+        data-start="0"
+        data-duration="20"
+        data-media-start="0"
+        data-track-index="10"
+        data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":0.4,"v":0.32},{"t":3.0,"v":0.36},{"t":7.92,"v":0.36},{"t":12.655,"v":0.36},{"t":15.6,"v":0.5},{"t":16.1,"v":0.5},{"t":17.0,"v":0.4},{"t":17.4,"v":0.28},{"t":20.0,"v":0}]}]}'
+      ></audio>
+
+      <!-- scene 1: typed-command key ticks -->
+      <audio id="s1-key-1" src="assets/sfx/keyboard/keypress-001.wav" data-start="0.5833" data-duration="0.08" data-volume="0.38" data-track-index="101"></audio>
+      <audio id="s1-key-2" src="assets/sfx/keyboard/keypress-002.wav" data-start="0.6667" data-duration="0.08" data-volume="0.38" data-track-index="102"></audio>
+      <audio id="s1-key-3" src="assets/sfx/keyboard/keypress-003.wav" data-start="0.75" data-duration="0.08" data-volume="0.38" data-track-index="103"></audio>
+      <audio id="s1-key-4" src="assets/sfx/keyboard/keypress-004.wav" data-start="0.8333" data-duration="0.08" data-volume="0.38" data-track-index="104"></audio>
+      <audio id="s1-key-5" src="assets/sfx/keyboard/keypress-005.wav" data-start="0.9167" data-duration="0.08" data-volume="0.38" data-track-index="105"></audio>
+      <audio id="s1-key-6" src="assets/sfx/keyboard/keypress-001.wav" data-start="1.0" data-duration="0.08" data-volume="0.38" data-track-index="106"></audio>
+      <audio id="s1-key-7" src="assets/sfx/keyboard/keypress-002.wav" data-start="1.0833" data-duration="0.08" data-volume="0.38" data-track-index="107"></audio>
+      <audio id="s1-key-8" src="assets/sfx/keyboard/keypress-003.wav" data-start="1.1667" data-duration="0.08" data-volume="0.38" data-track-index="108"></audio>
+      <audio id="s1-key-9" src="assets/sfx/keyboard/keypress-004.wav" data-start="1.25" data-duration="0.08" data-volume="0.38" data-track-index="109"></audio>
+      <audio id="s1-key-10" src="assets/sfx/keyboard/keypress-005.wav" data-start="1.3333" data-duration="0.08" data-volume="0.38" data-track-index="110"></audio>
+      <audio id="s1-key-11" src="assets/sfx/keyboard/keypress-001.wav" data-start="1.4167" data-duration="0.08" data-volume="0.38" data-track-index="111"></audio>
+      <audio id="s1-key-12" src="assets/sfx/keyboard/keypress-002.wav" data-start="1.5" data-duration="0.08" data-volume="0.38" data-track-index="112"></audio>
+      <audio id="s1-key-13" src="assets/sfx/keyboard/keypress-003.wav" data-start="1.5833" data-duration="0.08" data-volume="0.38" data-track-index="113"></audio>
+      <audio id="s1-key-14" src="assets/sfx/keyboard/keypress-004.wav" data-start="1.6667" data-duration="0.08" data-volume="0.38" data-track-index="114"></audio>
+      <audio id="s1-key-15" src="assets/sfx/keyboard/keypress-005.wav" data-start="1.75" data-duration="0.08" data-volume="0.38" data-track-index="115"></audio>
+      <audio id="s1-key-16" src="assets/sfx/keyboard/keypress-001.wav" data-start="1.8333" data-duration="0.08" data-volume="0.38" data-track-index="116"></audio>
+      <audio id="s1-key-17" src="assets/sfx/keyboard/keypress-002.wav" data-start="1.9167" data-duration="0.08" data-volume="0.38" data-track-index="117"></audio>
+      <audio id="s1-key-18" src="assets/sfx/keyboard/keypress-003.wav" data-start="2.0" data-duration="0.08" data-volume="0.38" data-track-index="118"></audio>
+      <audio id="s1-key-19" src="assets/sfx/keyboard/keypress-004.wav" data-start="2.0833" data-duration="0.08" data-volume="0.38" data-track-index="119"></audio>
+      <audio id="s1-key-20" src="assets/sfx/keyboard/keypress-005.wav" data-start="2.1667" data-duration="0.08" data-volume="0.38" data-track-index="120"></audio>
+      <audio id="s1-key-21" src="assets/sfx/keyboard/keypress-001.wav" data-start="2.25" data-duration="0.08" data-volume="0.38" data-track-index="121"></audio>
+      <audio id="s1-key-22" src="assets/sfx/keyboard/keypress-002.wav" data-start="2.3333" data-duration="0.08" data-volume="0.38" data-track-index="122"></audio>
+      <audio id="s1-enter" src="assets/sfx/keyboard/keypress-003.wav" data-start="2.47" data-duration="0.1" data-volume="0.5" data-track-index="123"></audio>
+
+      <!-- scene 2: log-line print ticks -->
+      <audio id="s2-tick-1" src="assets/sfx/interface/click_002.ogg" data-start="3.3" data-duration="0.06" data-volume="0.5" data-track-index="131"></audio>
+      <audio id="s2-tick-2" src="assets/sfx/interface/click_003.ogg" data-start="3.9" data-duration="0.06" data-volume="0.5" data-track-index="132"></audio>
+      <audio id="s2-tick-3" src="assets/sfx/interface/click_005.ogg" data-start="4.6" data-duration="0.06" data-volume="0.5" data-track-index="133"></audio>
+      <audio id="s2-tick-4" src="assets/sfx/interface/click_002.ogg" data-start="5.5" data-duration="0.06" data-volume="0.5" data-track-index="134"></audio>
+      <audio id="s2-tick-5" src="assets/sfx/interface/click_003.ogg" data-start="6.6" data-duration="0.06" data-volume="0.5" data-track-index="135"></audio>
+
+      <!-- scene 3: enter tick + color-wash whoosh -->
+      <audio id="s3-enter" src="assets/sfx/interface/click_005.ogg" data-start="7.95" data-duration="0.06" data-volume="0.4" data-track-index="140"></audio>
+      <audio id="s3-whoosh" src="assets/sfx/impact/impactSoft_heavy_002.ogg" data-start="9.02" data-duration="0.57" data-volume="0.6" data-track-index="141"></audio>
+
+      <!-- scene 4: command tick, row ticks, payoff chime -->
+      <audio id="s4-enter" src="assets/sfx/interface/click_005.ogg" data-start="12.68" data-duration="0.06" data-volume="0.4" data-track-index="150"></audio>
+      <audio id="s4-tick-1" src="assets/sfx/interface/click_002.ogg" data-start="13.205" data-duration="0.06" data-volume="0.5" data-track-index="151"></audio>
+      <audio id="s4-tick-2" src="assets/sfx/interface/click_003.ogg" data-start="13.655" data-duration="0.06" data-volume="0.5" data-track-index="152"></audio>
+      <audio id="s4-tick-3" src="assets/sfx/interface/click_005.ogg" data-start="14.075" data-duration="0.06" data-volume="0.5" data-track-index="153"></audio>
+      <audio id="s4-tick-4" src="assets/sfx/interface/click_002.ogg" data-start="14.475" data-duration="0.06" data-volume="0.5" data-track-index="154"></audio>
+      <audio id="s4-tick-5" src="assets/sfx/interface/click_003.ogg" data-start="14.855" data-duration="0.06" data-volume="0.5" data-track-index="155"></audio>
+      <audio id="s4-tick-6" src="assets/sfx/interface/click_005.ogg" data-start="15.215" data-duration="0.06" data-volume="0.5" data-track-index="156"></audio>
+      <audio id="s4-tick-7" src="assets/sfx/interface/click_002.ogg" data-start="15.555" data-duration="0.06" data-volume="0.55" data-track-index="157"></audio>
+      <audio id="s4-tick-8" src="assets/sfx/interface/click_003.ogg" data-start="15.875" data-duration="0.06" data-volume="0.55" data-track-index="158"></audio>
+      <audio id="s4-chime" src="assets/sfx/impact/impactBell_heavy_004.ogg" data-start="15.9" data-duration="0.301" data-volume="0.75" data-track-index="159"></audio>
+    </div>
+
+    <script>
+      gsap.registerPlugin(TextPlugin);
+
+      var tl = gsap.timeline({ paused: true });
+
+      // ---------------------------------------------------------------
+      // Scene 1 — the blank Mac (0 - 3.0)
+      // ---------------------------------------------------------------
+      var s1Cursor = document.getElementById("s1-cursor");
+      var TYPE_TEXT = "./scripts/bootstrap.sh";
+      var TYPE_START = 0.5;
+      var TYPE_CPS = 12;
+      var TYPE_DUR = TYPE_TEXT.length / TYPE_CPS;
+      var TYPE_END = TYPE_START + TYPE_DUR;
+
+      tl.call(function () { s1Cursor.classList.remove("cursor-blink"); s1Cursor.classList.add("cursor-solid"); }, [], TYPE_START);
+      tl.to("#s1-typed", { text: { value: TYPE_TEXT }, duration: TYPE_DUR, ease: "none" }, TYPE_START);
+      tl.call(function () { s1Cursor.classList.remove("cursor-solid"); s1Cursor.classList.add("cursor-blink"); }, [], TYPE_END);
+
+      // Enter acknowledgement — quick color flash on the prompt line
+      tl.to("#s1-prompt-line", { color: "#3ddc84", duration: 0.12 }, 2.47);
+      tl.to("#s1-prompt-line", { color: "#e8eaed", duration: 0.25 }, 2.61);
+
+      // Clean exit fade into scene 2
+      tl.to("#scene-1", { opacity: 0, duration: 0.15, ease: "none" }, 2.85);
+
+      // ---------------------------------------------------------------
+      // Scene 2 — bootstrap speedrun (3.0 - 7.92)
+      // ---------------------------------------------------------------
+      tl.fromTo("#scene-2", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 3.0);
+
+      tl.fromTo("#s2-line-1", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power2.out" }, 3.3);
+      tl.fromTo("#s2-line-2", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power2.out" }, 3.9);
+      tl.fromTo("#s2-line-3", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power2.out" }, 4.6);
+      tl.fromTo("#s2-line-4", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power2.out" }, 5.5);
+      tl.fromTo("#s2-line-5", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.28, ease: "power2.out" }, 6.6);
+
+      // ---------------------------------------------------------------
+      // Scene 3 — the terminal comes alive (7.92 - 12.655)
+      // ---------------------------------------------------------------
+      tl.fromTo(
+        "#scene-3",
+        { clipPath: "inset(0 100% 0 0)" },
+        { clipPath: "inset(0 0% 0 0)", duration: 0.35, ease: "power2.out" },
+        7.92,
+      );
+
+      // prompt theme swap
+      tl.to("#s3-old-prompt", { opacity: 0, duration: 0.3, ease: "none" }, 8.57);
+      tl.fromTo("#s3-new-prompt", { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }, 8.57);
+
+      // color-wash "glow" — background hue shift + brightness pulse, synced to the whoosh
+      tl.to("#root", { backgroundColor: "#0a1b14", duration: 0.6, ease: "power1.inOut" }, 9.02);
+      tl.to("#root", { filter: "brightness(1.18)", duration: 0.22, ease: "power1.out" }, 9.02);
+      tl.to("#root", { filter: "brightness(1)", duration: 0.4, ease: "power1.inOut" }, 9.24);
+
+      // soft crossfade out
+      tl.to("#scene-3", { opacity: 0, duration: 0.3, ease: "none" }, 12.355);
+
+      // ---------------------------------------------------------------
+      // Scene 4 — all green (12.655 - 17.0)
+      // ---------------------------------------------------------------
+      tl.fromTo("#scene-4", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" }, 12.655);
+      tl.fromTo("#s4-cmd", { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.25, ease: "power2.out" }, 12.655);
+      tl.fromTo("#s4-table", { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "none" }, 13.0);
+
+      var ROW_TIMES = [13.205, 13.655, 14.075, 14.475, 14.855, 15.215, 15.555, 15.875];
+      for (var r = 1; r <= 8; r++) {
+        var rt = ROW_TIMES[r - 1];
+        tl.fromTo("#s4-row-" + r, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.22, ease: "power2.out" }, rt);
+        tl.fromTo("#s4-status-" + r, { scale: 0.7 }, { scale: 1, duration: 0.3, ease: "back.out(2.4)" }, rt + 0.03);
+      }
+
+      // payoff — full-green glow pulse on the last row landing
+      tl.fromTo(
+        "#s4-table",
+        { boxShadow: "0 0 0px 0px rgba(61,220,132,0)" },
+        {
+          boxShadow: "0 0 70px 8px rgba(61,220,132,0.4)",
+          duration: 0.22,
+          ease: "power2.out",
+          yoyo: true,
+          repeat: 1,
+          immediateRender: false,
+        },
+        15.875,
+      );
+
+      // ---------------------------------------------------------------
+      // Scene 5 — outro card (17.0 - 20.0), hard cut in
+      // ---------------------------------------------------------------
+      tl.to("#title-bar", { opacity: 0, duration: 0.3, ease: "none" }, 16.85);
+
+      tl.fromTo("#s5-title", { y: 20, opacity: 0, scale: 0.94 }, { y: 0, opacity: 1, scale: 1, duration: 0.4, ease: "power3.out" }, 17.1);
+      tl.fromTo("#s5-tagline", { y: 16, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" }, 17.5);
+
+      // ---------------------------------------------------------------
+      // Subtle audio-reactive breathing on the ambient glow (deterministic,
+      // pre-extracted RMS data — see assets/music/audio-data.js)
+      // ---------------------------------------------------------------
+      var ambientGlow = document.getElementById("ambient-glow");
+      if (window.AUDIO_DATA && AUDIO_DATA.frames && AUDIO_DATA.frames.length) {
+        for (var f = 0; f < AUDIO_DATA.totalFrames; f++) {
+          (function (frameData) {
+            tl.call(
+              function () {
+                var intensity = 0.1 + frameData.rms * 0.14; // subtle 0.10 - 0.24 range
+                ambientGlow.style.boxShadow =
+                  "inset 0 0 260px 60px rgba(61,220,132," + intensity.toFixed(3) + ")";
+              },
+              [],
+              frameData.time,
+            );
+          })(AUDIO_DATA.frames[f]);
+        }
+      }
+
+      window.__timelines["mac-setup-brag"] = tl;
+    </script>
+  </body>
+</html>

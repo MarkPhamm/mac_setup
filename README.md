@@ -4,6 +4,10 @@ Reproducible setup for a fresh Apple Silicon Mac used for analytics engineering,
 
 This repo turns my Mac setup into code: Homebrew packages, terminal tooling, Zsh configuration, Cursor keybindings, formatting shortcuts, Git helpers, and setup notes.
 
+[![mac_setup demo](brag-output/brag.jpg)](brag-output/brag.mp4)
+
+One script, and a brand new Mac is a fully-loaded analytics engineering machine before your coffee's done. [Watch the 20-second demo](brag-output/brag.mp4).
+
 ## What this repo installs
 
 ### Core
