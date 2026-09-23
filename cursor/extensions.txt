@@ -13,6 +13,7 @@ ms-python.python
 ms-python.debugpy
 
 # dbt and SQL
+snowflake.snowflake-vsc
 dbtlabsinc.dbt
 innoverio.vscode-dbt-power-user
 altimateai.vscode-altimate-mcp-server
