@@ -11,6 +11,8 @@
 | Node.js | npm host for Codex CLI |
 | AWS CLI (`aws`) | AWS authentication and cloud CLI |
 | Terraform | infrastructure as code (HashiCorp tap; no longer in Homebrew core) |
+| Snowflake CLI (`snow`) | current Snowflake CLI: connections, SQL, Snowpark, apps |
+| SnowSQL (`snowsql`) | legacy Snowflake client, kept for existing scripts |
 | Oh My Zsh | Zsh configuration framework |
 
 ## Terminal stack
@@ -40,6 +42,7 @@
 | 1Password | password / credential management |
 | DBeaver | SQL GUI for warehouses and databases |
 | Obsidian | Markdown notes |
+| SnowSQL | installed as an app bundle by the `snowflake-snowsql` cask |
 
 ## Python and SQL
 
@@ -60,6 +63,42 @@ terraform version
 ```
 
 Configure AWS credentials with `aws configure` or SSO (`aws sso login`) when a project needs it. Keep account IDs and profiles in `~/.zshrc.local` or `~/.aws/`, not in this repo.
+
+## Snowflake
+
+Two clients, installed by Homebrew:
+
+```bash
+brew install snowflake-cli        # `snow`
+brew install --cask snowflake-snowsql  # `snowsql`
+```
+
+`snow` is the current CLI and the one to reach for by default. `snowsql` is the
+older client; it stays in the setup because existing scripts and worksheets
+still call it.
+
+SnowSQL installs as `/Applications/SnowSQL.app` and does not add itself to the
+shell PATH, so `zsh/.zshrc` prepends its binary directory:
+
+```bash
+export PATH="/Applications/SnowSQL.app/Contents/MacOS:$PATH"
+```
+
+Check both:
+
+```bash
+snow --version
+snowsql -v
+```
+
+Connections live outside this repo: `~/.snowflake/config.toml` for `snow` and
+`~/.snowsql/config` for `snowsql`. Keep accounts, users, and keys there or in
+1Password, never in this repo.
+
+```bash
+snow connection add
+snow connection test
+```
 
 ## Codex CLI
 

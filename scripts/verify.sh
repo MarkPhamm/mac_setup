@@ -22,6 +22,8 @@ commands=(
   lzop
   aws
   terraform
+  snow
+  snowsql
   black
   sqlfluff
   pdflatex
@@ -58,7 +60,7 @@ fi
 
 echo
 echo "GUI apps:"
-for app in Cursor Warp OrbStack Raycast Rectangle "1Password" DBeaver Obsidian; do
+for app in Cursor Warp OrbStack Raycast Rectangle "1Password" DBeaver Obsidian SnowSQL; do
   if [[ -d "/Applications/${app}.app" ]]; then
     printf "%-18s %s\n" "$app" "OK"
   else

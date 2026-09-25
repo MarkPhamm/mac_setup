@@ -19,6 +19,11 @@ brew "node"
 brew "awscli"
 brew "hashicorp/tap/terraform", trusted: true
 
+# Snowflake
+# snowflake-cli provides `snow`; snowsql is the older client, still needed for
+# scripts and worksheets that depend on it.
+brew "snowflake-cli"
+
 # Shell / productivity CLI
 brew "jq"
 brew "fzf"
@@ -41,6 +46,10 @@ cask "rectangle"
 cask "1password"
 cask "dbeaver-community"
 cask "obsidian"
+
+# SnowSQL ships as a pkg installer; it lands in /Applications/SnowSQL.app
+# and the binary is put on PATH by zsh/.zshrc.
+cask "snowflake-snowsql"
 
 # LaTeX
 cask "basictex"
