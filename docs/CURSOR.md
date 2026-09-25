@@ -62,7 +62,7 @@ The important custom workflow includes:
 |---|---|
 | `Cmd + I` | Cursor Composer / agent mode |
 | `Cmd + 1` | Toggle focus between terminal and editor |
-| `Cmd + Shift + C` | Copy relative file path |
+| `Cmd + Shift + C` | Copy absolute file path |
 | `Cmd + Shift + F` | SQLFluff fix current SQL file |
 | `Cmd + Shift + L` | SQLFluff lint current SQL file |
 | `Cmd + Shift + B` | Black-format current Python file |

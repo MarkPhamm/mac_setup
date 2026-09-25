@@ -86,3 +86,6 @@ if [[ ":$PATH:" != *":/Users/minhpham/.local/bin:"* ]]; then
 fi
 # Added by dbt Fusion extension
 alias dbtf=/Users/minhpham/.local/bin/dbt
+
+# dbt Fusion: full SQL comprehension locally (column/type checks)
+export DBT_STATIC_ANALYSIS=strict

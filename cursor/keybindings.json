@@ -14,8 +14,11 @@
     },
     {
         "key": "cmd+shift+c",
-        "command": "copyRelativeFilePath",
-        "when": "editorFocus"
+        "command": "-workbench.action.terminal.openNativeConsole"
+    },
+    {
+        "key": "cmd+shift+c",
+        "command": "copyFilePath"
     },
     {
         "key": "cmd+shift+f",
