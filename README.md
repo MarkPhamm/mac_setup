@@ -17,6 +17,8 @@ One script, and a brand new Mac is a fully-loaded analytics engineering machine 
 - uv
 - AWS CLI
 - Terraform
+- Snowflake CLI (`snow`)
+- SnowSQL (`snowsql`)
 - Oh My Zsh
 - zsh-autosuggestions
 - zsh-syntax-highlighting
@@ -74,6 +76,9 @@ macOS
 │   └── global CLI tools
 ├── AWS CLI
 ├── Terraform
+├── Snowflake
+│   ├── snow (Snowflake CLI)
+│   └── snowsql
 ├── DBeaver
 ├── Obsidian
 ├── docs/

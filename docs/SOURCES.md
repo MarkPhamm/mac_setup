@@ -53,6 +53,18 @@ Claude Code:
 https://code.claude.com/docs/en/setup
 ```
 
+Snowflake CLI:
+
+```text
+https://docs.snowflake.com/developer-guide/snowflake-cli/index
+```
+
+SnowSQL:
+
+```text
+https://docs.snowflake.com/en/user-guide/snowsql-install-config
+```
+
 Homebrew formulae/casks:
 
 ```text

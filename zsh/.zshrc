@@ -10,6 +10,11 @@ fi
 # User-installed command line tools (uv tools, pipx-style tools, etc.).
 export PATH="$HOME/.local/bin:$PATH"
 
+# SnowSQL installs as an app bundle and does not put itself on PATH.
+if [[ -d "/Applications/SnowSQL.app/Contents/MacOS" ]]; then
+  export PATH="/Applications/SnowSQL.app/Contents/MacOS:$PATH"
+fi
+
 # ------------------------------------------------------------
 # Oh My Zsh
 # ------------------------------------------------------------
