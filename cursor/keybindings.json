@@ -18,7 +18,7 @@
     },
     {
         "key": "cmd+shift+c",
-        "command": "copyFilePath"
+        "command": "copyRelativeFilePath"
     },
     {
         "key": "cmd+shift+f",
